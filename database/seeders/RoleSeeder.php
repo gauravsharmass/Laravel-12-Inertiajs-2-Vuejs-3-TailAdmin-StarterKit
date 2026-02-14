@@ -16,7 +16,7 @@ class RoleSeeder extends Seeder
     public function run(): void
     {
         $adminRole = Role::create(['name' => 'Admin']);
-        Role::create(['name' => 'User']);
+        $userRole = Role::create(['name' => 'User']);
 
         // Create admin user
         User::create([
@@ -24,6 +24,13 @@ class RoleSeeder extends Seeder
             'email' => 'admin@example.com',
             'password' => Hash::make('password'),
             'role_id' => $adminRole->id,
+        ]); 
+        // Create regular user 
+        User::create([
+            'name' => 'Regular User',
+            'email' => 'user@example.com',
+            'password' => Hash::make('password'),
+            'role_id' => $userRole->id,
         ]); 
     }
 }
