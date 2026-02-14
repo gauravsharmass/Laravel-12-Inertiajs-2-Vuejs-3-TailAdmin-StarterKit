@@ -52,7 +52,9 @@ php artisan key:generate
 # 4. Database & Seeding
 This project includes seeders to set up your RBAC roles and initial users.
 
-php artisan migrate --seed
+php artisan migrate
+
+php artisan db:seed --class=RoleSeeder
 
 # 5. Compile Assets & Run
    # Compile assets
