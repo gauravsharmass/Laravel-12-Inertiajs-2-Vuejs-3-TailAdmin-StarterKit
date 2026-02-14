@@ -65,14 +65,12 @@ php artisan serve
    php artisan test
 
 # 🔑 Default Credentials
-Once seeded, you can log in with the following admin account:
-
+Once seeded, you can log in with the following accounts:
 
 | Role | Email | Password |
 | -------- | -------- | -------- |
 | Admin | admin@example.com  | password  |
 | User| user@example.com | password |
-
 
 
 # 📁 Project Structure
@@ -94,4 +92,4 @@ Once seeded, you can log in with the following admin account:
 **CSS:** Tailwind CSS
 
 # 📄 License
-The MIT License (MIT). Please see License File for more information.
+The MIT License (MIT).
