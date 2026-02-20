@@ -25,12 +25,5 @@ class RoleSeeder extends Seeder
             'password' => Hash::make('password'),
             'role_id' => $adminRole->id,
         ]); 
-        // Create regular user 
-        User::create([
-            'name' => 'Regular User',
-            'email' => 'user@example.com',
-            'password' => Hash::make('password'),
-            'role_id' => $userRole->id,
-        ]); 
     }
 }
