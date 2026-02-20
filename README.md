@@ -72,7 +72,7 @@ Once seeded, you can log in with the following accounts:
 | Role | Email | Password |
 | -------- | -------- | -------- |
 | Admin | admin@example.com  | password  |
-| User| user@example.com | password |
+# Note: Regular User account can be created using register page
 
 
 # 📁 Project Structure
