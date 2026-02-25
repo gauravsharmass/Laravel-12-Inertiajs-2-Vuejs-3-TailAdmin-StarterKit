@@ -3,6 +3,9 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\ChangePasswordRequest;
+use App\Http\Requests\ForgotPasswordRequest;
+use App\Http\Requests\ResetPasswordRequest;
 use App\Models\User;
 use Illuminate\Auth\Events\PasswordReset;
 use Illuminate\Http\Request;
@@ -19,18 +22,10 @@ class ForgotPasswordController extends Controller
     {
          return Inertia::render('Auth/ForgotPassword');
     }
-    public function forgotPassword(Request $request): RedirectResponse
+    public function forgotPassword(ForgotPasswordRequest $request): RedirectResponse
     {
-        $validated = $request->validate([
-            'email' => ['required', 'email', 'exists:users,email'],
-        ], [
-            'email.required' => 'The email field is required.',
-            'email.email' => 'Please provide a valid email address.',
-            'email.exists' => 'We could not find a user with that email address.',
-        ]);
-
+        $validated = $request->validated();
         $status = Password::sendResetLink($validated);
-
         return $status === Password::ResetLinkSent
             ? back()->with('success', 'Password reset link sent successfully.')
             : back()->with('error', 'Failed to send password reset link.');
@@ -44,30 +39,16 @@ class ForgotPasswordController extends Controller
         ]);
     }
 
-    public function resetPassword(Request $request): RedirectResponse
+    public function resetPassword(ResetPasswordRequest $request): RedirectResponse
     {
-        $validated = $request->validate([
-            'token' => ['required'],
-            'email' => ['required', 'email'],
-            'password' => ['required', 'min:6', 'confirmed'],
-        ], [
-            'token.required' => 'Invalid reset token.',
-            'email.required' => 'The email field is required.',
-            'email.email' => 'Please provide a valid email address.',
-            'password.required' => 'The password field is required.',
-            'password.min' => 'The password must be at least 6 characters.',
-            'password.confirmed' => 'The password confirmation does not match.',
-        ]);
-
+        $validated = $request->validated();
         $status = Password::reset(
             $validated,
             function ($user, string $password) {
                 $user->forceFill([
                     'password' => Hash::make($password)
                 ]);
-
                 $user->save();
-
                 event(new PasswordReset($user));
             }
         );
@@ -82,16 +63,9 @@ class ForgotPasswordController extends Controller
         return Inertia::render('Auth/ChangePassword');
     }
     
-    public function postChangePassword(Request $request): RedirectResponse
+    public function postChangePassword(ChangePasswordRequest $request): RedirectResponse
     {
-        $validated = $request->validate([
-            'password' => ['required', 'min:6', 'confirmed'],
-        ], [
-            'password.required' => 'The password field is required.',
-            'password.min' => 'The password must be at least 6 characters.',
-            'password.confirmed' => 'The password confirmation does not match.',
-        ]);
-
+        $validated = $request->validated();
         $update = User::where('id', Auth::user()->id)->update([
             'password' => Hash::make($validated['password']),
         ]);

@@ -19,7 +19,7 @@ const handleRegister = () => {
         },
         onError: (errors) => {
             console.log("Login failed", errors);
-        }
+        },
     });
 };
 </script>
@@ -124,20 +124,22 @@ const handleRegister = () => {
                                             <label
                                                 for="default-checkbox"
                                                 class="select-none ms-2 text-sm font-medium text-heading"
-                                                >I agree to terms and
-                                                conditions</label
-                                            >
-                                            
+                                                >I agree to the
+                                                <Link
+                                                    href="javascript:;"
+                                                    class="text-brand-500 hover:text-brand-600 dark:text-brand-400"
+                                                    >terms</Link
+                                                >
+                                            </label>
                                         </div>
                                     </div>
-                                    
                                 </label>
                                 <span
-                                                v-if="form.errors.terms"
-                                                class="text-sm text-red-600"
-                                            >
-                                                {{ form.errors.terms }}
-                                            </span>
+                                    v-if="form.errors.terms"
+                                    class="text-sm text-red-600"
+                                >
+                                    {{ form.errors.terms }}
+                                </span>
                             </div>
                         </div>
 

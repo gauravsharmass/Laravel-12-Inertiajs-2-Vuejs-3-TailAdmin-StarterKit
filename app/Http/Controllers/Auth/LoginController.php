@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\LoginRequest;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 
@@ -24,12 +24,8 @@ class LoginController extends Controller
         }
         return Inertia::render('Auth/Login');
     }
-    public function login(Request $request): RedirectResponse
+    public function login(LoginRequest $request): RedirectResponse
     {
-        $request->validate([
-            'email' => ['required', 'email'],
-            'password' => ['required'],
-        ]);
         if (Auth::attempt($request->only('email', 'password'), $request->remember)) {
             if (Auth::user()->role_id == 1) {
                 return redirect()->intended('/admin-dashboard')->with('success', 'Logged in successfully');
